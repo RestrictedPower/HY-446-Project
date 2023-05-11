@@ -3,6 +3,7 @@ package implementations;
 import java.util.*;
 
 public class PriorityQueue<E extends Comparable<E>> {
+
 	private static final boolean TESTING = false;
 	private int heapCap;
 	private int currentSize;

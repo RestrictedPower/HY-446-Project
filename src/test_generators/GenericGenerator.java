@@ -1,32 +1,42 @@
+package test_generators;
+
 import java.util.ArrayList;
 
 public abstract class GenericGenerator {
 
     int dataSize;
+    String generatorName;
 
-    public GenericGenerator() {}
-
-    public GenericGenerator(int dataSize) {
-        this.dataSize = dataSize;
-    }
-    public void setDataSize(int dataSize){
-        this.dataSize = dataSize;
+    public GenericGenerator(String generatorName) {
+        setGeneratorName(generatorName);
     }
 
-    public int getDataSize(){
+    public void setDataSize(int dataSize) {
+        this.dataSize = dataSize;
+    }
+
+    public int getDataSize() {
         return dataSize;
     }
 
-    public String generateInsertInstruction(int value){
-        return "insert " + value;
+    public void setGeneratorName(String generatorName) {
+        this.generatorName = generatorName;
     }
 
-    public String generateRemoveInstruction(int value){
-        return "remove " + value;
+    public String getGeneratorName() {
+        return generatorName;
     }
 
-    public String generatePollInstraction(){
-        return "poll";
+    public String generateInsertInstruction(int value) {
+        return "i " + value;
+    }
+
+    public String generateRemoveInstruction(int value) {
+        return "r " + value;
+    }
+
+    public String generatePollInstraction() {
+        return "p";
     }
 
     public abstract ArrayList<String> getInstructionList();

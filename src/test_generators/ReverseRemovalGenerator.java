@@ -1,13 +1,11 @@
+package test_generators;
+
 import java.util.ArrayList;
 
 public class ReverseRemovalGenerator extends GenericGenerator {
 
-    public ReverseRemovalGenerator() {
-        super();
-    }
-
-    public ReverseRemovalGenerator(int dataSize) {
-        super(dataSize);
+    public ReverseRemovalGenerator(String generatorName) {
+        super(generatorName);
     }
 
     public ArrayList<String> getInstructionList() {

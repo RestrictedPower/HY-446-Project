@@ -1,5 +1,3 @@
-package test_generators;
-
 import java.util.ArrayList;
 
 public class ReverseGenerator extends GenericGenerator{
@@ -12,7 +10,7 @@ public class ReverseGenerator extends GenericGenerator{
         super(dataSize);
     }
 
-    public ArrayList<String> getInstructionList(){
+    public ArrayList<String> getInstructionList() {
         ArrayList<String> result = new ArrayList<>();
         for(int i = 1; i<=getDataSize(); i++){
             result.add(generateInsertInstruction(i));

@@ -1,5 +1,3 @@
-package test_generators;
-
 import java.util.ArrayList;
 
 public abstract class GenericGenerator {

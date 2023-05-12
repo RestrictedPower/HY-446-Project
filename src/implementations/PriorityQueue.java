@@ -1,5 +1,3 @@
-package implementations;
-
 import java.util.*;
 
 public class PriorityQueue<E extends Comparable<E>> {
@@ -61,9 +59,6 @@ public class PriorityQueue<E extends Comparable<E>> {
 		if(TESTING) validateAll();
 	}
 	
-//	public E getRand() {
-//		return heap[Util.random(0, currentSize-1)];
-//	}
 	
 	/********************
 	 * Helper functions	*

@@ -1,11 +1,12 @@
+package implementations;
+
 import java.util.*;
 
-public class PriorityQueue<E extends Comparable<E>> {
-
+public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> implements java.io.Serializable {
     private static final boolean TESTING = false;
     private int heapCap;
     private int currentSize;
-    private HashMap<E, HashSet<Integer>> objectIndex;
+    private final HashMap<E, HashSet<Integer>> objectIndex;
     private E[] heap;
 
     public PriorityQueue() {
@@ -29,13 +30,22 @@ public class PriorityQueue<E extends Comparable<E>> {
         return v;
     }
 
-    public void add(E v) {
+    public E peek() {
+        return heap[0];
+    }
+
+    public boolean add(E v) {
+        return offer(v);
+    }
+
+    public boolean offer(E v) {
         if (currentSize >= heapCap) expandSize();
         heap[currentSize] = v;
         insertIndex(currentSize);
         pushUp(currentSize);
         currentSize++;
         if (TESTING) validateAll();
+        return true;
     }
 
     public E getMin() {
@@ -59,6 +69,30 @@ public class PriorityQueue<E extends Comparable<E>> {
         if (TESTING) validateAll();
     }
 
+    /************
+     * Iterator *
+     ************/
+
+    public Iterator<E> iterator() {
+        return new Itr();
+    }
+
+    private final class Itr implements Iterator<E> {
+        private int cursor;
+
+        Itr() {
+            cursor = 0;
+        }                        // prevent access constructor creation
+
+        public boolean hasNext() {
+            return cursor < currentSize;
+        }
+
+        public E next() {
+            if (cursor < currentSize) return (E) heap[cursor++];
+            throw new NoSuchElementException();
+        }
+    }
 
     /********************
      * Helper functions	*
@@ -104,7 +138,7 @@ public class PriorityQueue<E extends Comparable<E>> {
      * Delete value at the given index in the heap.
      * Returns the deleted value.
      */
-    public E deleteAt(int idx) {
+    private E deleteAt(int idx) {
         if (idx >= currentSize) throw new RuntimeException("Index out of bounds!");
         E valueToReturn = heap[idx];
         currentSize--;
@@ -140,10 +174,8 @@ public class PriorityQueue<E extends Comparable<E>> {
      */
     private void expandSize() {
         int nextSize = heapCap << 1;
-        E[] newArray = (E[]) new Comparable[nextSize];
-        for (int i = 0; i < heapCap; i++) newArray[i] = heap[i];
         heapCap = nextSize;
-        heap = newArray;
+        heap = Arrays.copyOf(heap, nextSize);
         if (TESTING) validateAll();
     }
 
@@ -179,7 +211,7 @@ public class PriorityQueue<E extends Comparable<E>> {
     /*
      * Validates that the current state of the whole implementation is valid.
      */
-    public boolean validateAll() {
+    private boolean validateAll() {
         boolean indexes = validateIndexes();
         boolean state = validateHeapState();
         return state && indexes;
@@ -188,7 +220,7 @@ public class PriorityQueue<E extends Comparable<E>> {
     /*
      * Validates that all the indexes are valid in the objectIndex Map.
      */
-    public boolean validateIndexes() {
+    private boolean validateIndexes() {
         int cnt = 0;
         for (E i : objectIndex.keySet()) {
             int sz = objectIndex.get(i).size();
@@ -212,7 +244,7 @@ public class PriorityQueue<E extends Comparable<E>> {
     /*
      * Checks if all the parents are smaller than the children.
      */
-    public boolean validateHeapState() {
+    private boolean validateHeapState() {
         for (int i = 0; i < currentSize; i++) {
             int ch1 = (i << 1) + 1, ch2 = (i << 1) + 2;
             if (ch1 < currentSize && smaller(ch1, i)) {

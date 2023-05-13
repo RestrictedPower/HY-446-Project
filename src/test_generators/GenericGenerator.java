@@ -35,7 +35,7 @@ public abstract class GenericGenerator {
         return "r " + value;
     }
 
-    public String generatePollInstraction() {
+    public String generatePollInstruction() {
         return "p";
     }
 

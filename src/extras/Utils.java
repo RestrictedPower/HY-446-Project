@@ -1,6 +1,7 @@
 package extras;
 
 import java.io.*;
+import java.sql.Array;
 import java.util.*;
 
 public class Utils {
@@ -12,6 +13,17 @@ public class Utils {
 
     public static int randomInt() {
         return random.nextInt();
+    }
+
+    public static ArrayList<String> getAllFilesInDirectory(String dir) {
+        ArrayList<String> res = new ArrayList<>();
+        File folder = new File(dir);
+        for (File fileEntry : folder.listFiles()) {
+            if (!fileEntry.isDirectory()) {
+                res.add(fileEntry.getPath());
+            }
+        }
+        return res;
     }
 
     public static void writeListOnFile(ArrayList<String> lines, String directory, String filename) {
@@ -26,6 +38,10 @@ public class Utils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void dbg(Object... o) {
+        System.out.println(Arrays.deepToString(o));
     }
 }
 

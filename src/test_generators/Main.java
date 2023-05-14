@@ -1,6 +1,7 @@
 package test_generators;
 
 import java.util.ArrayList;
+
 import extras.Utils;
 
 public class Main {
@@ -13,15 +14,15 @@ public class Main {
     }
 
 
-    private static String sizeForFilename(int size){
-        if(size >= 1_000_000) return size/1_000_000 +"m";
-        if(size >= 1_000) return size/1_000 +"k";
-        return size+"";
+    private static String sizeForFilename(int size) {
+        if (size >= 1_000_000) return size / 1_000_000 + "m";
+        if (size >= 1_000) return size / 1_000 + "k";
+        return size + "";
     }
 
     public static void main(String[] args) {
-        int[] dataSizes = new int[] {1_000, 100_000, 1_000_000};
-        for(int dataSize : dataSizes){
+        int[] dataSizes = new int[]{1_000, 100_000, 1_000_000};
+        for (int dataSize : dataSizes) {
             for (GenericGenerator gen : getAllGenerators()) {
                 gen.setDataSize(dataSize);
                 String outfileName = gen.getGeneratorName() + "_" + sizeForFilename(dataSize);

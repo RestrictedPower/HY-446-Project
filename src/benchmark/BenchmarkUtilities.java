@@ -13,26 +13,26 @@ import java.util.regex.Pattern;
 public class BenchmarkUtilities {
     static final int BENCHMARK_TIMES = 1;
 
-    public static Result benchmarkAllFiles(ArrayList<String> files){
+    public static Result benchmarkAllFiles(ArrayList<String> files) {
         Result res = new Result();
-        for(String file : files){
+        for (String file : files) {
             String[] splittedFileName = file.split(Pattern.quote(File.separator));
-            String filename = splittedFileName[splittedFileName.length-1];
+            String filename = splittedFileName[splittedFileName.length - 1];
             res.addResult(filename, benchmarkSingleFile(file));
         }
         return res;
     }
 
     private static double benchmarkSingleFile(String fileLocation) {
-        System.out.println("Benchmarking: "+fileLocation);
+        System.out.println("Benchmarking: " + fileLocation);
         TestInput input = parseFile(fileLocation);
         long result = Long.MAX_VALUE;
-        for(int i = 0; i<BENCHMARK_TIMES; i++){
+        for (int i = 0; i < BENCHMARK_TIMES; i++) {
             input.reset();
             long temp = benchmarkOnce(input);
             result = Math.min(temp, result);
         }
-        return result/(double)(1e6);
+        return result / (double) (1e6);
     }
 
     private static long benchmarkOnce(TestInput input) {

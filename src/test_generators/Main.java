@@ -8,7 +8,7 @@ public class Main {
     public static ArrayList<GenericGenerator> getAllGenerators() {
         ArrayList<GenericGenerator> generators = new ArrayList<>();
         generators.add(new ReverseRemovalGenerator("ReverseRemoval"));
-        generators.add(new Insert5Remove1Generator("Insert5Remove1"));
+        generators.add(new Insert4Remove1Generator("Insert4Remove1"));
         generators.add(new InsertRemoveRandom("InsertRemoveRandom", 3));
         return generators;
     }

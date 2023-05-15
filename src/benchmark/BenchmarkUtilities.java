@@ -23,7 +23,7 @@ public class BenchmarkUtilities {
         return res;
     }
 
-    private static double benchmarkSingleFile(String fileLocation) {
+    private static long benchmarkSingleFile(String fileLocation) {
         System.out.println("Benchmarking: " + fileLocation);
         TestInput input = parseFile(fileLocation);
         long result = Long.MAX_VALUE;
@@ -32,11 +32,12 @@ public class BenchmarkUtilities {
             long temp = benchmarkOnce(input);
             result = Math.min(temp, result);
         }
-        return result / (double) (1e6);
+        return result;
     }
 
+
     private static long benchmarkOnce(TestInput input) {
-        long timeCounter = System.nanoTime();
+        long timeCounter = System.currentTimeMillis();
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         while (input.next()) {
             Operation op = input.getCurrentOperationType();
@@ -48,7 +49,7 @@ public class BenchmarkUtilities {
                 pq.poll();
             }
         }
-        timeCounter = System.nanoTime() - timeCounter;
+        timeCounter = System.currentTimeMillis() - timeCounter;
         System.out.println("Total time: " + timeCounter);
         return timeCounter;
     }
@@ -83,5 +84,4 @@ public class BenchmarkUtilities {
             return null;
         }
     }
-
 }

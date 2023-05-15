@@ -5,14 +5,15 @@ import java.util.ArrayList;
 import extras.Utils;
 
 public class Main {
+
     public static ArrayList<GenericGenerator> getAllGenerators() {
         ArrayList<GenericGenerator> generators = new ArrayList<>();
         generators.add(new ReverseRemovalGenerator("ReverseRemoval"));
         generators.add(new Insert4Remove1Generator("Insert4Remove1"));
-        generators.add(new InsertRemoveRandom("InsertRemoveRandom", 3));
+        generators.add(new InsertRemoveRandom("InsertRemoveRandomP3", 3));
+        generators.add(new InsertRemoveRandom("InsertRemoveRandomP5", 5));
         return generators;
     }
-
 
     private static String sizeForFilename(int size) {
         if (size >= 1_000_000) return size / 1_000_000 + "m";

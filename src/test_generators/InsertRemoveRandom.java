@@ -20,8 +20,7 @@ public class InsertRemoveRandom extends GenericGenerator {
         int operations = getDataSize();
         for (int i = 0; i < operations; i++) {
             int rng = Utils.randomIntInRange(1, probability);
-            if (rng == 1 && !currentValues.isEmpty()) {
-                //  Remove
+            if (rng == 1 && !currentValues.isEmpty()) { // Remove
                 int removeIndex = Utils.randomIntInRange(0, currentValues.size() - 1);
                 int removeValue = currentValues.get(removeIndex);
                 currentValues.set(removeIndex, currentValues.get(currentValues.size() - 1));

@@ -72,7 +72,6 @@ public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> imp
     /************
      * Iterator *
      ************/
-
     public Iterator<E> iterator() {
         return new Itr();
     }

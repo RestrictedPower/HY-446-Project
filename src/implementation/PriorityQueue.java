@@ -1,25 +1,93 @@
-package implementations;
+package implementation;
 
 import java.util.*;
 
-public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> implements java.io.Serializable {
+/**
+ * FOR EDUCATIONAL PURPOSES ONLY, MIGHT BE BROKEN AF.
+ * <p>
+ * Custom PriorityQueue Implementation
+ *
+ * @param <E> the type of elements held in this queue
+ * @author Konstantinos Anemozalis, Orfeas Xatzipanagiotis
+ */
+@SuppressWarnings("unchecked")
+public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serializable {
+
+    @java.io.Serial
+    private static final long serialVersionUID = -7720805057305804111L;
     private static final boolean TESTING = false;
     private int heapCap;
     private int currentSize;
-    private final HashMap<E, HashSet<Integer>> objectIndex;
-    private E[] heap;
+    private final HashMap<Object, HashSet<Integer>> objectIndex;
+    private transient Object[] heap;
 
-    public PriorityQueue() {
+    /**
+     * The comparator, or null if priority queue uses elements'
+     * natural ordering.
+     */
+    @SuppressWarnings("serial")
+    private final Comparator<? super E> comparator;
+
+    /**
+     * Constructor with custom initial capacity and comparator
+     *
+     * @param initialCapacity The initial heap size
+     * @param comparator      The comparator to use
+     */
+    public PriorityQueue(int initialCapacity, Comparator<? super E> comparator) {
         objectIndex = new HashMap<>();
-        heapCap = 8;
+        heapCap = initialCapacity;
         currentSize = 0;
-        heap = (E[]) new Comparable[heapCap];
+        this.heap = new Object[heapCap];
+        this.comparator = comparator;
+    }
+
+    /**
+     * Constructor with custom comparator
+     *
+     * @param comparator The comparator to use
+     */
+    public PriorityQueue(Comparator<? super E> comparator) {
+        this(8, comparator);
+    }
+
+    /**
+     * Constructor with custom initial capacity
+     *
+     * @param initialCapacity The initial heap size
+     */
+    public PriorityQueue(int initialCapacity) {
+        objectIndex = new HashMap<>();
+        heapCap = initialCapacity;
+        currentSize = 0;
+        heap = (E[]) new Object[heapCap];
+        this.comparator = null;
         if (TESTING) validateAll();
+    }
+
+    /**
+     * Basic constructor
+     */
+    public PriorityQueue() {
+        this(8);
+    }
+
+    /**
+     * Returns the comparator used to order the elements in this
+     * queue, or {@code null} if this queue is sorted according to
+     * the {@linkplain Comparable natural ordering} of its elements.
+     *
+     * @return the comparator used to order this queue, or
+     * {@code null} if this queue is sorted according to the
+     * natural ordering of its elements
+     */
+    public Comparator<? super E> comparator() {
+        return comparator;
     }
 
     public E poll() {
         if (currentSize == 0) throw new RuntimeException("empty!");
-        E v = getMin();
+        E v = peek();
         currentSize--;
         removeIndex(currentSize);
         removeIndex(0);
@@ -31,7 +99,8 @@ public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> imp
     }
 
     public E peek() {
-        return heap[0];
+        if (currentSize == 0) throw new RuntimeException("empty!");
+        return (E) heap[0];
     }
 
     public boolean add(E v) {
@@ -48,10 +117,6 @@ public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> imp
         return true;
     }
 
-    public E getMin() {
-        return heap[0];
-    }
-
     public int size() {
         return currentSize;
     }
@@ -60,13 +125,14 @@ public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> imp
         return size() == 0;
     }
 
-    public void remove(E v) {
+    public boolean remove(Object v) {
         if (!objectIndex.containsKey(v)) {
-            throw new RuntimeException("Could not find the given value!");
+            return false;
         }
         int idx = objectIndex.get(v).iterator().next();
         deleteAt(idx);
         if (TESTING) validateAll();
+        return true;
     }
 
     /************
@@ -93,6 +159,12 @@ public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> imp
         }
     }
 
+    /**
+     * Sanity check
+     */
+    public void sanityCheck(){
+        System.out.println("This function is here to verify that the jvm is indeed using our implementation. Ignore :)");
+    }
     /********************
      * Helper functions	*
      ********************/
@@ -130,7 +202,13 @@ public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> imp
      * Returns true only if the value at index i is strictly less than the value at index j.
      */
     private boolean smaller(int i, int j) {
-        return heap[i].compareTo(heap[j]) < 0;
+        boolean smaller;
+        if (comparator == null) {
+            smaller = ((Comparable<? super E>) heap[i]).compareTo((E) heap[j]) < 0;
+        } else {
+            smaller = comparator.compare((E) heap[i], (E) heap[j]) < 0;
+        }
+        return smaller;
     }
 
     /*
@@ -139,7 +217,7 @@ public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> imp
      */
     private E deleteAt(int idx) {
         if (idx >= currentSize) throw new RuntimeException("Index out of bounds!");
-        E valueToReturn = heap[idx];
+        E valueToReturn = (E) heap[idx];
         currentSize--;
         removeIndex(idx);
         if (idx == currentSize) {
@@ -161,7 +239,7 @@ public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> imp
     private void swap(int i, int j) {
         removeIndex(i);
         removeIndex(j);
-        E tmp = heap[i];
+        E tmp = (E) heap[i];
         heap[i] = heap[j];
         heap[j] = tmp;
         insertIndex(i);
@@ -182,7 +260,7 @@ public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> imp
      * Insert the idx to the multiset.
      */
     private void insertIndex(int idx) {
-        E data = heap[idx];
+        E data = (E) heap[idx];
         if (!objectIndex.containsKey(data)) {
             objectIndex.put(data, new HashSet<>());
         }
@@ -193,7 +271,7 @@ public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> imp
      * Insert the idx from the multiset.
      */
     private void removeIndex(int idx) {
-        E data = heap[idx];
+        E data = (E) heap[idx];
         if (!objectIndex.containsKey(data)) return;
         if (objectIndex.get(data).size() == 1) {
             objectIndex.remove(data);
@@ -221,7 +299,7 @@ public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> imp
      */
     private boolean validateIndexes() {
         int cnt = 0;
-        for (E i : objectIndex.keySet()) {
+        for (Object i : objectIndex.keySet()) {
             int sz = objectIndex.get(i).size();
             if (sz == 0) return false;
             cnt += sz;
@@ -231,7 +309,7 @@ public class PriorityQueue<E extends Comparable<E>> extends AbstractQueue<E> imp
             return false;
         }
         for (int i = 0; i < currentSize; i++) {
-            E data = heap[i];
+            E data = (E) heap[i];
             if (!objectIndex.containsKey(data) || !objectIndex.get(data).contains(i)) {
                 System.err.println("Could not find index of object in heap!");
                 return false;

@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 import java.util.regex.Pattern;
 
 public class BenchmarkUtilities {
-    static final int BENCHMARK_TIMES = 1;
+    static final int BENCHMARK_TIMES = 3;
 
     public static Result benchmarkAllFiles(ArrayList<String> files) {
         Result res = new Result();
@@ -23,18 +23,17 @@ public class BenchmarkUtilities {
         return res;
     }
 
-    private static long benchmarkSingleFile(String fileLocation) {
+    private static long[] benchmarkSingleFile(String fileLocation) {
         System.out.println("Benchmarking: " + fileLocation);
         TestInput input = parseFile(fileLocation);
-        long result = Long.MAX_VALUE;
+        long[] results = new long[BENCHMARK_TIMES];
         for (int i = 0; i < BENCHMARK_TIMES; i++) {
             input.reset();
             long temp = benchmarkOnce(input);
-            result = Math.min(temp, result);
+            results[i] = temp;
         }
-        return result;
+        return results;
     }
-
 
     private static long benchmarkOnce(TestInput input) {
         long timeCounter = System.currentTimeMillis();
@@ -50,7 +49,6 @@ public class BenchmarkUtilities {
             }
         }
         timeCounter = System.currentTimeMillis() - timeCounter;
-        System.out.println("Total time: " + timeCounter);
         return timeCounter;
     }
 
@@ -75,7 +73,6 @@ public class BenchmarkUtilities {
                     value[i] = Integer.parseInt(args[1]);
                 } else if (args[0].equals("p")) {
                     opType[i] = Operation.POLL;
-                    value[i] = Integer.parseInt(args[1]);
                 } else throw new RuntimeException("Invalid operation: " + line);
             }
             br.close();

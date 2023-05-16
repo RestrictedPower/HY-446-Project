@@ -1,7 +1,6 @@
 package benchmark;
 
 public class TestInput {
-
     int size;
     int iteratorIdx;
     private Operation[] operationType;

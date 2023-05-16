@@ -10,7 +10,6 @@ def parseFile(filename):
     with open(filename, newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
         for row in spamreader:
-            print(row[0])
             minVal = min(row[0].split(";")[1:])
             testName = row[0].split(";")[0]
             namePrefix, size = testName.split("_")
@@ -51,7 +50,6 @@ for group in OUR_DATA:
             otherTime = int(OTHER_DATA[group][dataSize])
         res.append([dataSize, ourTime, otherTime])
     res.sort()
-    print(res)
     title = testName + " results"
     plt = plot(res, title, "Data Size", 'Execution time (ms)')
     fileName = testName + ".png"

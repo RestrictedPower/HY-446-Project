@@ -3,12 +3,13 @@ package test_generators;
 import java.util.ArrayList;
 
 public abstract class GenericGenerator {
-
     int dataSize;
     String generatorName;
+    private ArrayList<String> instructionList;
 
     public GenericGenerator(String generatorName) {
         setGeneratorName(generatorName);
+        instructionList = new ArrayList<>();
     }
 
     public void setDataSize(int dataSize) {
@@ -27,17 +28,21 @@ public abstract class GenericGenerator {
         return generatorName;
     }
 
-    public String generateInsertInstruction(int value) {
-        return "i " + value;
+    public void generateInsertInstruction(int value) {
+         instructionList.add("i " + value);
     }
 
-    public String generateRemoveInstruction(int value) {
-        return "r " + value;
+    public void generateRemoveInstruction(int value) {
+        instructionList.add("r " + value);
     }
 
-    public String generatePollInstruction() {
-        return "p";
+    public void generatePollInstruction() {
+        instructionList.add("p");
     }
 
-    public abstract ArrayList<String> getInstructionList();
+    public ArrayList<String> getInstructionLists(){
+        return instructionList;
+    }
+
+    public abstract ArrayList<String> generateInstructionList();
 }

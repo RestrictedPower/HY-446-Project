@@ -14,7 +14,7 @@ public class InsertRemoveRandom extends GenericGenerator {
         this.probability = probability;
     }
 
-    public ArrayList<String> getInstructionList() {
+    public ArrayList<String> generateInstructionList() {
         ArrayList<String> result = new ArrayList<>();
         ArrayList<Integer> currentValues = new ArrayList<>();
         int operations = getDataSize();
@@ -24,14 +24,14 @@ public class InsertRemoveRandom extends GenericGenerator {
                 int removeIndex = Utils.randomIntInRange(0, currentValues.size() - 1);
                 int removeValue = currentValues.get(removeIndex);
                 currentValues.set(removeIndex, currentValues.get(currentValues.size() - 1));
-                result.add(generateRemoveInstruction(removeValue));
+                generateRemoveInstruction(removeValue);
                 currentValues.remove(currentValues.size() - 1);
             } else {
                 int insertValue = Utils.randomInt();
                 currentValues.add(insertValue);
-                result.add(generateInsertInstruction(insertValue));
+                generateInsertInstruction(insertValue);
             }
         }
-        return result;
+        return getInstructionLists();
     }
 }

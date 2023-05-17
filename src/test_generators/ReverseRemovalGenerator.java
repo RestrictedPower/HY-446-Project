@@ -8,14 +8,15 @@ public class ReverseRemovalGenerator extends GenericGenerator {
         super(generatorName);
     }
 
-    public ArrayList<String> getInstructionList() {
+
+    public ArrayList<String> generateInstructionList() {
         ArrayList<String> result = new ArrayList<>();
         for (int i = 1; i <= getDataSize(); i++) {
-            result.add(generateInsertInstruction(i));
+            generateInsertInstruction(i);
         }
         for (int i = getDataSize(); i >= 1; i--) {
-            result.add(generateRemoveInstruction(i));
+            generateRemoveInstruction(i);
         }
-        return result;
+        return getInstructionLists();
     }
 }

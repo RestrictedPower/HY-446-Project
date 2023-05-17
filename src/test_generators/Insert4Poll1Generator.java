@@ -10,16 +10,15 @@ public class Insert4Poll1Generator extends GenericGenerator {
         super(generatorName);
     }
 
-    public ArrayList<String> getInstructionList() {
-        ArrayList<String> result = new ArrayList<>();
+    public ArrayList<String> generateInstructionList() {
         int operations = (getDataSize() + 4) / 5;
         for (int i = 0; i < operations; i++) {
             for (int j = 0; j < 4; j++) {
                 int insertValue = Utils.randomInt();
-                result.add(generateInsertInstruction(insertValue));
+                generateInsertInstruction(insertValue);
             }
-            result.add(generatePollInstruction());
+            generatePollInstruction();
         }
-        return result;
+        return getInstructionLists();
     }
 }

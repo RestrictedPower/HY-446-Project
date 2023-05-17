@@ -1,4 +1,4 @@
-# JVM - Priority Queue $O(logn)$ removals
+# JVM - Priority Queue with $O(logn)$ removals
 
 A JVM Priority Queue implementation that supports $O(logn)$ remove operations.
 
@@ -79,7 +79,7 @@ In order to test our results follow these steps:
 * Create an entry of your generator in the `getAllGenerators()` function found in the `test_generators/Main` class.
 
 ### Benchmark
-To benchmark, we count the execution time of each instruction file 3 times. You can modify this value (`BENCHMARK_TIMES`) in the file `benchmark/BenchmarkUtilities.java` 
+To benchmark, we count the execution time of each instruction file 3 times. You can modify the `BENCHMARK_TIMES` value in the file `benchmark/BenchmarkUtilities.java` 
 
 ### Graph plotter
 We use python to generate the plots by using the `results.csv` files. The benchmarks use the smallest execution time of each test.

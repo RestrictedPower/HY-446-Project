@@ -10,7 +10,7 @@ public class Insert4Poll1Generator extends GenericGenerator {
         super(generatorName);
     }
 
-    public ArrayList<String> generateInstructionList() {
+    public void generateInstructionList() {
         int operations = (getDataSize() + 4) / 5;
         for (int i = 0; i < operations; i++) {
             for (int j = 0; j < 4; j++) {
@@ -19,6 +19,5 @@ public class Insert4Poll1Generator extends GenericGenerator {
             }
             generatePollInstruction();
         }
-        return getInstructionLists();
     }
 }

@@ -8,8 +8,8 @@ public abstract class GenericGenerator {
     private ArrayList<String> instructionList;
 
     public GenericGenerator(String generatorName) {
-        setGeneratorName(generatorName);
         instructionList = new ArrayList<>();
+        setGeneratorName(generatorName);
     }
 
     public void setDataSize(int dataSize) {
@@ -40,9 +40,9 @@ public abstract class GenericGenerator {
         instructionList.add("p");
     }
 
-    public ArrayList<String> getInstructionLists() {
+    public ArrayList<String> getInstructionList() {
         return instructionList;
     }
 
-    public abstract ArrayList<String> generateInstructionList();
+    public abstract void generateInstructionList();
 }

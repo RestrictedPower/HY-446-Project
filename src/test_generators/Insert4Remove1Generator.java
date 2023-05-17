@@ -10,7 +10,7 @@ public class Insert4Remove1Generator extends GenericGenerator {
         super(generatorName);
     }
 
-    public ArrayList<String> generateInstructionList() {
+    public void generateInstructionList() {
         ArrayList<String> result = new ArrayList<>();
         ArrayList<Integer> currentValues = new ArrayList<>();
         int operations = (getDataSize() + 4) / 5;
@@ -26,6 +26,5 @@ public class Insert4Remove1Generator extends GenericGenerator {
             generateRemoveInstruction(removeValue);
             currentValues.remove(currentValues.size() - 1);
         }
-        return getInstructionLists();
     }
 }

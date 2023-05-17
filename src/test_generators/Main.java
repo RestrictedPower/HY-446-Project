@@ -28,7 +28,8 @@ public class Main {
             for (GenericGenerator gen : getAllGenerators()) {
                 gen.setDataSize(dataSize);
                 String outfileName = gen.getGeneratorName() + "_" + sizeForFilename(dataSize);
-                Utils.writeListOnFile(gen.generateInstructionList(), "GeneratedTests", outfileName);
+                gen.generateInstructionList();
+                Utils.writeListOnFile(gen.getInstructionList(), "GeneratedTests", outfileName);
             }
         }
     }

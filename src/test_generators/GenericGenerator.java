@@ -29,7 +29,7 @@ public abstract class GenericGenerator {
     }
 
     public void generateInsertInstruction(int value) {
-         instructionList.add("i " + value);
+        instructionList.add("i " + value);
     }
 
     public void generateRemoveInstruction(int value) {
@@ -40,7 +40,7 @@ public abstract class GenericGenerator {
         instructionList.add("p");
     }
 
-    public ArrayList<String> getInstructionLists(){
+    public ArrayList<String> getInstructionLists() {
         return instructionList;
     }
 

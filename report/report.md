@@ -1,24 +1,24 @@
 # JVM - Priority Queue with $O(logn)$ removals
 
-csd4366 - Orfeas Chatzipanagiotis <br>
-csd4149 - Konstantinos Anemozalis <br>
+#### csd4366 - Orfeas Chatzipanagiotis <br>
+#### csd4149 - Konstantinos Anemozalis <br>
 
 ## Introduction
 
 The priority queue is one of the most commonly used data structures in applications.
 Most modern languages have support for the priority queue data structure through their
-standard libraries. Java provides a priority queue class with a standard implementation
+original libraries. Java provides a priority queue class with a original implementation
 that offers low space complexity as well as $O(1)$ access to the first element of the
 priority queue. However, one operation that is often very slow on priority queues is
-element deletion. Deletion has a $O(n)$ time complexity making it extremely inefficient
-for applications that delete elements very frequently. We introduced a new priority queue
-implementation that is optimized for fast deletions using a hash map. The hash table is
+element removal. Removal has a $O(n)$ time complexity making it extremely inefficient
+for applications that remove elements very frequently. We introduced a new priority queue
+implementation that is optimized for fast removals using a hash map. The hash table is
 used along side the heap structure to maintain the indices of all the elements in the
 heap and support arbitrary element removals in $O(logn)$.
 
-## Standard implementation
+## Original implementation
 
-The priority queue implementation in the Java standard library uses a heap structure, a
+The priority queue implementation in the Java original library uses a heap structure, a
 one-dimensional array with size equal or greater to the number of elements in the priority
 queue. It also caches the first element to ensure $O(1)$ access.
 
@@ -61,7 +61,7 @@ The data generator was a simple script that produced a list of instructions in t
 ```
 ...
 INSERT 5
-DELETE 1
+REMOVE 1
 INSERT 2
 POLL   2
 ...
@@ -73,14 +73,27 @@ in the beginning and then were tested on both our and original implementation.
 
 ### Turning off garbage collection
 
-Since our goal was to compare the time differences between the two implementations, we set the
-garbage collection threshold to a a very large number. Thus we avoided any collections would
-skew our results.
+Since our goal was to compare the time difference between the two implementations, we used
+the EpsilonGC, a special Garbage Collector that doesn't perform any collections. Thus we
+avoided any collections that would skew our results.
+
+### Environment
+
+OS: `Ubuntu 23.04`
+
+CPU: `AMD Ryzen 7 5800X 8-Core Processor`
+
+RAM: `32GB`
+
+JDK: `Openjdk 21-internal 2023-09-19`
+
+JVM-args: `-Xms15G -Xmx15G -XX:+UnlockExperimentalVMOptions -XX:+UseEpsilonGC`
 
 ## Generators
 
 * ReverseRemoval - _original worst case scenario/our best case scenario_
-  * This generator produces output that is the worst case scenario for the original implementation of the priority queue, and it is expected to run much faster in our implementation.
+  * This generator produces output that is the worst case scenario for the original implementation
+  of the priority queue, and it is expected to run much faster in our implementation.
 * Insert4Remove1
   * This generator inserts 4 elements, and removes 1 random that is already inside the priority queue.
 * InsertRemoveRandom
@@ -95,7 +108,7 @@ skew our results.
 ## Results
 
 #### Blue line: our implementation
-#### Orange line: standard JVM implementation
+#### Orange line: original JVM implementation
 
 ### Insert4Poll1
 
@@ -113,3 +126,12 @@ skew our results.
 
 ![](../src/plotter/InsertRemoveRandomP5.png)
 
+### Comments
+
+The goal of the first test was to show how our implementation scales when there are no removal operations.
+As we can see as the data size grows, our implementation becomes slower at a linear rate. This is was something
+we expected since the overhead of bookkeeping and the constant factor of our algorithm has a significant toll
+on the overall performance.
+
+The rest of the test cases, however, exhibit the opposite behaviour: the original implementation becomes
+quadratically slower, whereas our implementation maintains an almost linear rate.

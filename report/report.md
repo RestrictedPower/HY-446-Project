@@ -48,6 +48,12 @@ implementation performs worse than the original
 
 2) It has a much larger memory footprint in order to store the hash map
 
+## Validity
+
+To validate the correctness of our implementation we stress tested it against a much simpler
+implementation (can be found under the `../src/stresstest` directory). Both implementations
+produced the same results which convinced us that no errors were made.
+
 ## Benchmarking
 
 We exhibited a series of benchmarks based on various test cases that we created. The test
@@ -112,19 +118,19 @@ JVM-args: `-Xms15G -Xmx15G -XX:+UnlockExperimentalVMOptions -XX:+UseEpsilonGC`
 
 ### Insert4Poll1
 
-![](../src/plotter/Insert4Poll1.png)
+![](./assets/Insert4Poll1.png)
 
 ### Insert4Remove1
 
-![](../src/plotter/Insert4Remove1.png)
+![](./assets/Insert4Remove1.png)
 
 ### InsertRemoveRandomP3
 
-![](../src/plotter/InsertRemoveRandomP3.png)
+![](./assets/InsertRemoveRandomP3.png)
 
 ### InsertRemoveRandomP5
 
-![](../src/plotter/InsertRemoveRandomP5.png)
+![](./assets/InsertRemoveRandomP5.png)
 
 ### Comments
 

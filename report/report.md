@@ -5,22 +5,15 @@
 
 ## Introduction
 
-The priority queue is one of the most commonly used data structures in applications.
-Most modern languages have support for the priority queue data structure through their
-original libraries. Java provides a priority queue class with a original implementation
-that offers low space complexity as well as $O(1)$ access to the first element of the
-priority queue. However, one operation that is often very slow on priority queues is
-element removal. Removal has a $O(n)$ time complexity making it extremely inefficient
-for applications that remove elements very frequently. We introduced a new priority queue
-implementation that is optimized for fast removals using a hash map. The hash table is
-used along side the heap structure to maintain the indices of all the elements in the
-heap and support arbitrary element removals in $O(logn)$.
-
-## Original implementation
-
-The priority queue implementation in the Java original library uses a heap structure, a
-one-dimensional array with size equal or greater to the number of elements in the priority
-queue. It also caches the first element to ensure $O(1)$ access.
+The priority queue is one of the most commonly used data structures in applications. Most
+modern languages have support for the priority queue data structure through their standard
+libraries. Java provides a priority queue class with a standard implementation that offers
+low space complexity. However, one operation that is often very slow on priority queues is
+element removal. Removal has a $O(n)$ time complexity making it extremely inefficient for
+applications that remove elements very frequently. We introduced a new priority queue
+implementation that is optimized for fast removals using a hash map. The hash map is used
+along side the heap structure to maintain the indices of all the elements in the heap and
+support arbitrary element removals in $O(logn)$.
 
 ## Our implementation
 
@@ -51,7 +44,7 @@ implementation performs worse than the original
 ## Validity
 
 To validate the correctness of our implementation we stress tested it against a much simpler
-implementation (can be found under the `../src/stresstest` directory). Both implementations
+implementation (can be found under the `./src/stresstest` directory). Both implementations
 produced the same results which convinced us that no errors were made.
 
 ## Benchmarking
@@ -75,7 +68,7 @@ POLL   2
 
 This list was then read by the instruction executor, the program we were experimenting on,
 and it performed these operations on a priority queue. The test suites were produced once
-in the beginning and then were tested on both our and original implementation.
+in the beginning and then were tested on both ours and original implementation.
 
 ### Turning off garbage collection
 

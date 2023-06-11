@@ -3,9 +3,7 @@ package implementation;
 import java.util.*;
 
 /**
- * FOR EDUCATIONAL PURPOSES ONLY, MIGHT BE BROKEN AF.
- * <p>
- * Custom PriorityQueue Implementation
+ * Custom PriorityQueue Implementation that supports O(logn) removals.
  *
  * @param <E> the type of elements held in this queue
  * @author Konstantinos Anemozalis, Orfeas Xatzipanagiotis
@@ -87,13 +85,7 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
 
     public E poll() {
         if (currentSize == 0) throw new RuntimeException("empty!");
-        E v = peek();
-        currentSize--;
-        removeIndex(currentSize);
-        removeIndex(0);
-        heap[0] = heap[currentSize];
-        insertIndex(0);
-        pushDown(0);
+        E v = deleteAt(0);
         if (TESTING) validateAll();
         return v;
     }

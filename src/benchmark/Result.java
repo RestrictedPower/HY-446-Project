@@ -22,7 +22,7 @@ public class Result {
         ArrayList<String> merged = new ArrayList<>();
         for (int i = 0; i < testNames.size(); i++) {
             StringBuilder times = new StringBuilder();
-            for(long singleTime : executionTimes.get(i)) times.append(";"+singleTime);
+            for (long singleTime : executionTimes.get(i)) times.append(";" + singleTime);
             merged.add(testNames.get(i) + times.toString());
         }
         Utils.writeListOnFile(merged, "Results", filename);

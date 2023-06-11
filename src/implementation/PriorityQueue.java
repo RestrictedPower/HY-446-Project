@@ -151,12 +151,6 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
         }
     }
 
-    /**
-     * Sanity check
-     */
-    public void sanityCheck(){
-        System.out.println("This function is here to verify that the jvm is indeed using our implementation. Ignore :)");
-    }
     /********************
      * Helper functions	*
      ********************/

@@ -8,7 +8,6 @@ public class ReverseRemovalGenerator extends GenericGenerator {
         super(generatorName);
     }
 
-
     public void generateInstructionList() {
         ArrayList<String> result = new ArrayList<>();
         for (int i = 1; i <= getDataSize(); i++) {
